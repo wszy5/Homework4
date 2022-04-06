@@ -31,19 +31,23 @@ int main() {
     bool flag_y = false;
     bool flag_x = false;
 
-
+    int margin = 10;
     while (window.isOpen()) {
         sf::Time elapsed = clock.restart();
         float dt = elapsed.asSeconds();
+        sf::FloatRect rectangle_bounds = rectangle.getGlobalBounds();
 
         rectangle.move(rectangle_velocity_x*dt,rectangle_velocity_y*dt);
-        rectangle.rotate(rectangle_angular_velocity*dt);
+        if((rectangle_bounds.top>0+margin && rectangle_bounds.left>0+margin) && (rectangle_bounds.top<800-margin && rectangle_bounds.left<600-margin))
+        {
 
-        sf::FloatRect rectangle_bounds = rectangle.getGlobalBounds();
+        rectangle.rotate(rectangle_angular_velocity*dt);
+}
+//        sf::FloatRect rectangle_bounds = rectangle.getGlobalBounds();
         std::cout << rectangle_bounds.top << " " << rectangle_bounds.left << " " ;
         std::cout << rectangle_bounds.width << " " << rectangle_bounds.height << std::endl;
 
-        if(rectangle_bounds.top<=0 || rectangle_bounds.top+rectangle_bounds.height>=window.getSize().y)
+        if(rectangle_bounds.top-margin<=0 || rectangle_bounds.top+rectangle_bounds.height>=window.getSize().y)
             {
                 if(flag_y != true)
                 {
@@ -59,7 +63,7 @@ int main() {
 
 
 
-            if(rectangle_bounds.left<=0 || rectangle_bounds.left+rectangle_bounds.width>=window.getSize().x)
+            if(rectangle_bounds.left-margin<=0 || rectangle_bounds.left+rectangle_bounds.width>=window.getSize().x)
             {
                 if(flag_x!=true)
                 {
@@ -73,16 +77,16 @@ int main() {
             else
                 flag_x = false;
 
-            if(rectangle_bounds.left<=0 && rectangle_bounds.top<=0){
-                rectangle_velocity_x *= -1;
-                flag_x = true;
-//
-//                rectangle.rotate(rectangle_angular_velocity*dt);
-                rectangle.setFillColor(sf::Color(rand() % 256,
-                                                 rand() % 256,
-                                                 rand() % 256));
+//            if(rectangle_bounds.left<=0){
+//                rectangle_velocity_x *= -1;
+//                flag_x = false;
+////
+////                rectangle.rotate(rectangle_angular_velocity*dt);
+//                rectangle.setFillColor(sf::Color(rand() % 256,
+//                                                 rand() % 256,
+//                                                 rand() % 256));
 
-            }
+//            }
 
 
 
